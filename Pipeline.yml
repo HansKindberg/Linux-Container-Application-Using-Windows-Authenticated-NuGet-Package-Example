@@ -1,0 +1,21 @@
+trigger:
+  branches:
+    exclude:
+    - "*"
+    # include:
+    # - "*"
+
+pool:
+  name: "Linux"  
+
+stages:
+- stage: "Build"
+  displayName: "Build"
+  jobs:
+  - template: "Build-template.yml"
+- stage: "Deploy"
+  condition: succeeded()
+  dependsOn: "Build"
+  displayName: "Deploy"
+  jobs:
+  - template: "Deploy-template.yml"

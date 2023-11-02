@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{07954E11-BEB4-4FB8-9EFB-CF8E9450FE23}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Build-template.yml = Build-template.yml
+		Deploy-template.yml = Deploy-template.yml
+		NuGet.Build.config = NuGet.Build.config
+		NuGet.config = NuGet.config
+		NuGet.Deploy.config = NuGet.Deploy.config
+		Pipeline.yml = Pipeline.yml
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{A6DDEF67-8E49-4F5A-8219-EFF3B77F084A}"
+	ProjectSection(SolutionItems) = preProject
+		Source\.dockerignore = Source\.dockerignore
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Source\Application\Application.csproj", "{B98C5CB9-839E-4261-BE32-3AA1BD29732D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B98C5CB9-839E-4261-BE32-3AA1BD29732D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98C5CB9-839E-4261-BE32-3AA1BD29732D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98C5CB9-839E-4261-BE32-3AA1BD29732D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98C5CB9-839E-4261-BE32-3AA1BD29732D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B98C5CB9-839E-4261-BE32-3AA1BD29732D} = {A6DDEF67-8E49-4F5A-8219-EFF3B77F084A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6433BB7-DCAC-44DF-9003-121F140F5A3E}
+	EndGlobalSection
+EndGlobal

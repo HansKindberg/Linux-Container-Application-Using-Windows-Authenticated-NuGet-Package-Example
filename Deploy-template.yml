@@ -1,0 +1,31 @@
+jobs:
+- deployment: "Deployment" # There are problems naming jobs: Deploy - https://developercommunity.visualstudio.com/t/job-is-pending-1/1044298
+  displayName: "Deployment"
+  environment: "Example"
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: none
+        - script: |
+            cp "NuGet.Deploy.config" "Source/NuGet.config" -v
+            echo "docker build 'Source' -f 'Source/Application/Dockerfile' -t 'application:example' ..."
+            docker build "Source" -f "Application/Dockerfile" -t "application:example"
+          displayName: "docker build"
+          failOnStderr: false
+        - powershell: |
+            $count = 0;
+            $repository = "localhost/application";
+
+            Write-Host "Removing images from repository '$($repository)'...";
+
+            foreach($item in docker images -q $repository)
+            {
+              Write-Host "Removing image '$($item)'...";
+              docker rmi $item -f;
+              $count++;
+            }
+
+            Write-Host "Removed $($count) images from repository '$($repository)'.";
+          displayName: "docker rmi (cleanup)"
+          failOnStderr: true
