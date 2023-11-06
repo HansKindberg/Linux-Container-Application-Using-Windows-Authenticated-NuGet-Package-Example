@@ -4,6 +4,7 @@ jobs:
   variables:
     BUILD_CONFIGURATION: "Release"
     BUILD_PROJECTS: "[Ss]ource/**/*.csproj"
+    NUGET_BUILD_CONFIG: "NuGet.Build.config"
   workspace:
     clean: all
   steps:
@@ -11,22 +12,23 @@ jobs:
     displayName: "Use .NET Core sdk"
     inputs:
       version: 7.0.x
-  - script: |
-      sed -i -e "s/%NUGET_FEED_SECRET_PASSWORD%/$(NUGET_FEED_SECRET_PASSWORD)/g" NuGet.Build.config
-    displayName: "Replace password-token with pipeline-variable value in NuGet.Build.config"
   - task: DotNetCoreCLI@2
     displayName: "Restore"
+    env:
+      NUGET_FEED_PASSWORD: $(NUGET_FEED_PASSWORD) # To use a secret variable in a script, you must explicitly map it as an environment variable, https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables#secret-variables. So if you change NUGET_FEED_USER to a secret you have to do the same with that.
     inputs:
       command: restore
       feedsToUse: "config"
-      nugetConfigPath: "NuGet.Build.config"
+      nugetConfigPath: "$(NUGET_BUILD_CONFIG)"
       projects: "$(BUILD_PROJECTS)"
   - task: DotNetCoreCLI@2
     displayName: "Restore to a specific folder that we can copy in our Dockerfile"
+    env:
+      NUGET_FEED_PASSWORD: $(NUGET_FEED_PASSWORD) # To use a secret variable in a script, you must explicitly map it as an environment variable, https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables#secret-variables. So if you change NUGET_FEED_USER to a secret you have to do the same with that.
     inputs:
       command: restore
       feedsToUse: "config"
-      nugetConfigPath: "NuGet.Build.config"
+      nugetConfigPath: "$(NUGET_BUILD_CONFIG)"
       projects: "$(BUILD_PROJECTS)"
       restoreDirectory: "$(Build.SourcesDirectory)/Source/NuGet-packages"
   - task: DotNetCoreCLI@2
